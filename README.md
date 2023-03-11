@@ -1,1 +1,1 @@
-# human-pulse-frequency-spectrum-analysis
+# Human pulse frequency spectrum analysis
