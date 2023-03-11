@@ -19,11 +19,9 @@ Project is created with:
 Improvement list:
 
 To do:
-* Create basic GUI - three columns for: To do/In progress/Done
-* Implement adding tasks functionality with simple things like setting up deadline and description
-* User registration and login (with possible roles)
+
 
 ## Inspiration
-This app is inspired by Trello (https://trello.com)
+
 
 
