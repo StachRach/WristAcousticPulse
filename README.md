@@ -19,7 +19,7 @@ Build and program a prototype device for analyzing the frequency spectrum of the
 
 ### Software
 
-* Linux bases OS
+* Linux based OS
 * Python
  
 ## To do:
