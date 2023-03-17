@@ -11,9 +11,16 @@ A research project carried out as part of a master's degree at the Gdańsk Unive
 Build and program a prototype device for analyzing the frequency spectrum of the human pulse, using a Raspberry Pi (or other platform) single-chip minicomputer and microphones. Such analysis will be used to assess the physiological state of the human body, which has been used for thousands of years in traditional Chinese medicine (and beyond).
 	
 ## Technologies
-Project is created with:
-* Python,
-* more (in the future).
+
+### Hardware
+
+* Raspberry Pi
+* Microphones with low frequency response
+
+### Software
+
+* Linux based OS
+* Python
  
 ## To do:
 
