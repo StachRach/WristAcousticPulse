@@ -14,8 +14,8 @@ Build and program a prototype device for analyzing the frequency spectrum of the
 
 ### Hardware
 
-* Raspberry Pi
-* Microphones with low frequency response
+* Raspberry Pi 3B+
+* Microphones with low frequency response (budget friendly)
 
 ### Software
 
