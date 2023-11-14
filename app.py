@@ -4,18 +4,19 @@ import time
 from PyQt5.QtCore import QSize, QThread, QObject, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget
 
+from data_aquisition import data_aquisition, save_to_file
+
 
 class Worker(QObject):
     finished = pyqtSignal()
-    progress = pyqtSignal(int)
+    progress = pyqtSignal(list)
 
     def __init__(self):
         super().__init__()
 
     def run(self):
-        for i in range(10):
-            self.progress.emit(i + 1)
-            time.sleep(1)
+        self.temp = data_aquisition(150, 0.2)
+        self.progress.emit(self.temp)
         self.finished.emit()
 
 
@@ -25,6 +26,7 @@ class Window(QMainWindow):
         self.worker = None
         self.thread = None
         self.clicks = 0
+        self.data = None
         self.setWindowTitle("HR Analysis")
         self.resize(QSize(400, 300))
 
@@ -38,8 +40,8 @@ class Window(QMainWindow):
         self.button2.setEnabled(False)
         self.button2.clicked.connect(self.btn_clicked)
         
-        self.label = QLabel('Step: 0')
-        self.label2 = QLabel('Clicks: 0')
+        self.label = QLabel('Data will appear here.')
+        self.label2 = QLabel('')
 
         v_box = QVBoxLayout(widget)
         v_box.addWidget(self.button)
@@ -63,23 +65,21 @@ class Window(QMainWindow):
 
         self.thread.start()
 
-        self.worker.progress.connect(lambda i: self.label.setText(f"Step: {i}"))
+        self.worker.progress.connect(self.show_last_five)
 
-        self.thread.finished.connect(self.clear_labels)
         self.thread.finished.connect(self.toggle_available_btn)
+
+    def show_last_five(self, d):
+        self.data = d
+        self.label.setText(f'{d[-5]}\n{d[-4]}\n{d[-3]}\n{d[-2]}\n{d[-1]}\n')
 
     def toggle_available_btn(self):
         self.button.setEnabled(True)
         self.button2.setEnabled(True)
 
-    def clear_labels(self):
-        self.label.setText("Step: 0")
-        self.label2.setText("Clicks: 0")
-        self.clicks = 0
-
     def btn_clicked(self):
-        self.clicks += 1
-        self.label2.setText(f'Clicks: {self.clicks}')
+        save_to_file(self.data)
+        self.label2.setText('Data have been saved as .csv file.')
 
 
 if __name__ == '__main__':
