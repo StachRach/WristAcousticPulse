@@ -1,8 +1,8 @@
 import sys
-import time
+import os
 
 from PyQt5.QtCore import QSize, QThread, QObject, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget, QFileDialog
 
 from data_aquisition import data_aquisition, save_to_file
 
@@ -25,7 +25,6 @@ class Window(QMainWindow):
         super().__init__(None)
         self.worker = None
         self.thread = None
-        self.clicks = 0
         self.data = None
         self.setWindowTitle("HR Analysis")
         self.resize(QSize(400, 300))
@@ -78,8 +77,14 @@ class Window(QMainWindow):
         self.button2.setEnabled(True)
 
     def btn_clicked(self):
-        save_to_file(self.data)
-        self.label2.setText('Data have been saved as .csv file.')
+        fileName, _ = QFileDialog.getSaveFileName(self,"Save",os.getcwd(),"CSV Files (*.csv)")
+
+        try:
+            save_to_file(self.data, fileName)
+            self.label2.setText(f'Data have been saved as .csv file.')
+        except:
+            self.label2.setText(f'An error occured while saving data.')
+        
 
 
 if __name__ == '__main__':

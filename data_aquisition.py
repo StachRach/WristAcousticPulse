@@ -18,7 +18,7 @@ def data_aquisition(t, interval):
 
     for _ in range(0, t):
         print("Warotśc na wejściu: ",channel.value, "Napięcie: ", channel.voltage)
-        x.append(channel.voltage) 
+        x.append(round(channel.voltage, 8)) 
         time.sleep(interval)
 
     return x
@@ -30,9 +30,6 @@ def data_aquisition(t, interval):
 # fig.savefig("plot.png")
 # plt.show()
 
-def save_to_file(data):
+def save_to_file(data, fn):
     df = pd.DataFrame(data)
-    df.to_csv('data.csv',index=False, header=False)
-
-
-
+    df.to_csv(f'{fn}.csv',index=False, header=False)
