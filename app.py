@@ -15,7 +15,7 @@ class Worker(QObject):
         super().__init__()
 
     def run(self):
-        self.temp = data_aquisition(150, 0.2)
+        self.temp = data_aquisition(30, 100)
         self.progress.emit(self.temp)
         self.finished.emit()
 
@@ -38,7 +38,7 @@ class Window(QMainWindow):
         self.button2 = QPushButton('Save to file (.csv)')
         self.button2.setEnabled(False)
         self.button2.clicked.connect(self.btn_clicked)
-        
+
         self.label = QLabel('Data will appear here.')
         self.label2 = QLabel('')
 
@@ -47,7 +47,7 @@ class Window(QMainWindow):
         v_box.addWidget(self.label)
         v_box.addWidget(self.button2)
         v_box.addWidget(self.label2)
-        
+
     def collect_data(self):
         self.button.setEnabled(False)
         self.button2.setEnabled(False)
@@ -77,14 +77,14 @@ class Window(QMainWindow):
         self.button2.setEnabled(True)
 
     def btn_clicked(self):
-        fileName, _ = QFileDialog.getSaveFileName(self,"Save",os.getcwd(),"CSV Files (*.csv)")
+        fileName, _ = QFileDialog.getSaveFileName(
+            self, "Save", os.getcwd(), "CSV Files (*.csv)")
 
         try:
             save_to_file(self.data, fileName)
             self.label2.setText(f'Data have been saved as .csv file.')
         except:
             self.label2.setText(f'An error occured while saving data.')
-        
 
 
 if __name__ == '__main__':
